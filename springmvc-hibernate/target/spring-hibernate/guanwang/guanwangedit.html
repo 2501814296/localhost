@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <input id="id" name="id" type="hidden">
+    <input id="names" name="names" type="hidden">
+    <input id="oper" name="oper" type="hidden">
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">水厂</label>
+            <div class="layui-input-block">
+                <select name="name" lay-filter="name" id="name">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">编号</label>
+            <div class="layui-input-block">
+                <input type="text" id="bianhao" name="bianhao" lay-verify="required" lay-reqtext="编号不能为空" placeholder="请输入编号" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">长度</label>
+            <div class="layui-input-block">
+                <input type="number" id="changdu" name="changdu" lay-verify="required" lay-reqtext="长度不能为空" placeholder="请输入长度" value="" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">尺寸</label>
+            <div class="layui-input-block">
+                <input type="number" id="chicun" name="chicun" lay-verify="required" lay-reqtext="尺寸不能为空" placeholder="请输入尺寸" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">最大压力</label>
+            <div class="layui-input-block">
+                <input type="number" id="maxyali" name="maxyali" lay-verify="required" lay-reqtext="最大压力不能为空" placeholder="请输入最大压力" value="" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">流量</label>
+            <div class="layui-input-block">
+                <input type="number" id="liuliang" name="liuliang" lay-verify="required" lay-reqtext="流量不能为空" placeholder="请输入流量" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">水位</label>
+            <div class="layui-input-block">
+                <input type="text" id="shuiwei" name="shuiwei" lay-verify="required" lay-reqtext="水位不能为空" placeholder="请输入水位" value="" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">管网名称</label>
+            <div class="layui-input-block">
+                <input type="text" id="guanwangname" name="guanwangname" lay-verify="required" lay-reqtext="管网名称不能为空" placeholder="请输入管网名称" value="" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">地址</label>
+            <div class="layui-input-block">
+                <input type="text" id="dizhi" name="dizhi" lay-verify="required" lay-reqtext="地址不能为空" placeholder="请输入地址" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">法人</label>
+            <div class="layui-input-block">
+                <input type="email" id="faren" name="faren" lay-verify="required" lay-reqtext="法人不能为空" placeholder="请输入法人" value="" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">联系人</label>
+            <div class="layui-input-block">
+                <input type="text" id="lianxiren" name="lianxiren" lay-verify="required" lay-reqtext="联系人不能为空" placeholder="请输入联系人" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">联系电话</label>
+            <div class="layui-input-block">
+                <input type="text" id="dianhua" name="dianhua" lay-verify="required" lay-reqtext="联系电话不能为空" placeholder="请输入联系电话" value="" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">经度</label>
+            <div class="layui-input-block">
+                <input type="number" id="jingdu" name="jingdu" lay-verify="required" lay-reqtext="经度不能为空" placeholder="请输入经度" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">维度</label>
+            <div class="layui-input-block">
+                <input type="number" id="weidu" name="weidu" lay-verify="required" lay-reqtext="维度不能为空" placeholder="请输入维度" value="" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <div class="layui-col-md12">
+            <label class="layui-form-label">备注信息</label>
+            <div class="layui-input-block">
+                <textarea id="remark" name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button id="save" class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            console.log(data.field);
+            $.ajax({
+                url:'/guanwang/updateWaterPlace',
+                type:'post',
+                data:data.field,
+                success:function(data){
+                    if(data!="0"){
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(iframeIndex);
+                        parent.layui.table.reload('currentTableId',{page:{curr:1}});
+                        parent.layer.alert("保存成功！",{icon: 1,time: 1000});
+                    }
+                    else{
+                        layer.alert("提交失败！")
+                    }
+                },
+                error:function(e){
+                    layer.alert("提交失败！")
+                },
+            });
+
+            return false;
+        });
+
+        //加载下拉框
+        $.ajax({
+            url: '/water/getSomeWater',
+            type: 'post',
+            success: function (data) {
+                debugger;
+                console.log("1")
+                var on = false;
+                var count = 0;
+                for (var i = 0; i < data.data.length; i++) {
+                    if($("#names").val() == data.data[i].name && count == 0){
+                       on = true;
+                    }
+                    if (on) {
+                        $("#name").append(
+                            "<option value=\"" + data.data[i].name + "\" selected=\"\">" + data.data[i].name + "</option>");
+                        on = false;
+                        count = 1;
+                    } else {
+                        $("#name").append(
+                            "<option value=\"" + data.data[i].name + "\">" + data.data[i].name + "</option>");
+                    }
+                }
+                form.render();
+            },
+            error: function (e) {
+                layer.alert("获取水厂失败！")
+            },
+        });
+        if($("#oper").val() == "readonly"){
+            $("input,textarea").prop("readonly",true);
+            $("select").prop("disabled",true);
+            $("#save").hide();
+        }
+
+    });
+</script>
+</body>
+</html>

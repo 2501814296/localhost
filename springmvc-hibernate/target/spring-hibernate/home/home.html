@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+
+    <link rel="stylesheet" href="../home/css/chunk-libs.ddb43507.css" media="all">
+    <link rel="stylesheet" href="../home/css/app.a1cef4b3.css" media="all">
+    <link rel="stylesheet" href="../home/css/chunk-699e.1d948456.css" media="all">
+    <link rel="stylesheet" href="../home/css/chunk-dc61.5e854be5.css" media="all">
+
+    <link rel="stylesheet" href="../home/css/home.css" media="all">
+
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div data-v-7894daf4="" class="dashboard-container">
+            <div class="dashboard-editor-container">
+                <div class="el-row">
+                    <div class="el-col el-col-24">
+                        <div id="dashujuButton" style="text-align: center; cursor: pointer; height: 100px; width: 100%; padding-right: 20px; margin-bottom: 10px; background-image: url(&quot;/home/image/homeTop.png&quot;);">
+                            <h1 style="padding: 28px 0px; color: rgb(255, 255, 255); letter-spacing: 8px;">
+                                大数据展示平台</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="el-row">
+                    <div class="el-col el-col-4" style="padding-right: 8px; margin-bottom: 10px;">
+                        <div class="el-card box-card is-always-shadow">
+                            <div class="el-card__body">
+                                <div class="el-row">
+                                    <div class="el-col el-col-12">
+                                        <div class="accountcss">
+                                            <img src="../home/image/1.png">
+                                        </div>
+                                    </div>
+                                    <div class="el-col el-col-12">
+                                        <div class="text" style="text-align: center;padding-top: 20px;">
+                                            活跃账号<br>
+                                            <span id="hyzh"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="el-col el-col-5" style="padding-right: 8px; margin-bottom: 10px;">
+                        <div class="el-card box-card is-always-shadow">
+                            <div class="el-card__body">
+                                <div class="el-row">
+                                    <div class="el-col el-col-12">
+                                        <div class="accountcss">
+                                            <img src="../home/image/2.png">
+                                        </div>
+                                    </div>
+                                    <div class="el-col el-col-12">
+                                        <div class="text" style="text-align: center;padding-top: 20px;">
+                                            最近一小时<br>
+                                            <span id="oneHour"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="el-col el-col-5" style="padding-right: 8px; margin-bottom: 10px;">
+                        <div class="el-card box-card is-always-shadow">
+                            <div class="el-card__body">
+                                <div class="el-row">
+                                    <div class="el-col el-col-12">
+                                        <div class="accountcss">
+                                            <img src="../home/image/3.png">
+                                        </div>
+                                    </div>
+                                    <div class="el-col el-col-12">
+                                        <div class="text" style="text-align: center;padding-top: 20px;">
+                                            最近一天<br>
+                                            <span id="oneDay"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="el-col el-col-5" style="padding-right: 8px; margin-bottom: 10px;">
+                        <div class="el-card box-card is-always-shadow">
+                            <div class="el-card__body">
+                                <div class="el-row">
+                                    <div class="el-col el-col-12">
+                                        <div class="accountcss">
+                                            <img src="../home/image/4.png">
+                                        </div>
+                                    </div>
+                                    <div class="el-col el-col-12">
+                                        <div class="text" style="text-align: center;padding-top: 20px;">
+                                            最近一个月<br>
+                                            <span id="oneMonth"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="el-col el-col-5" style="padding-right: 8px; margin-bottom: 10px;">
+                        <div class="el-card box-card is-always-shadow">
+                            <div class="el-card__body">
+                                <div class="el-row">
+                                    <div class="el-col el-col-12">
+                                        <div class="accountcss">
+                                            <img src="../home/image/5.png">
+                                        </div>
+                                    </div>
+                                    <div class="el-col el-col-12">
+                                        <div class="text" style="text-align: center;padding-top: 20px;">
+                                            不活跃账号<br>
+                                            <span id="bhyzh"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="el-row">
+                    <div class="el-col el-col-12" style="padding-right: 8px; margin-bottom: 10px;">
+                        <div data-v-19603d3b="">
+                            <div data-v-19603d3b="" class="el-card box-card is-always-shadow">
+                                <div class="el-card__body">
+                                    <div data-v-19603d3b="" class="clearfix"><span data-v-19603d3b="">水源地 <div
+                                            data-v-19603d3b="" class="el-select el-select--mini" style="width: 220px;"><div
+                                            class="el-input el-input--mini el-input--suffix">
+                                            <form class="layui-form">
+                                                <select lay-filter="yuanshuidi" id="yuanshuidi" name="yuanshuidi">
+
+                                                </select>
+                                            </form>
+                                            </div></div></span></div>
+                                    <div class="el-row">
+                                        <!--源水地-->
+                                        <div class="layui-col-md6" style="width:100%">
+                                            <div class="layui-card">
+                                                <div class="layui-card-body">
+                                                    <div id="yuanshuidiTu" style="height: 410px"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="el-col el-col-12">
+                        <div data-v-71b02e80="">
+                            <div data-v-71b02e80="" class="el-card box-card is-always-shadow">
+                                <div class="el-card__body">
+                                    <div data-v-71b02e80="" class="clearfix"><span data-v-71b02e80="">水务水厂 <div
+                                            data-v-71b02e80="" class="el-select el-select--mini" style="width: 220px;"><div
+                                            class="el-input el-input--mini el-input--suffix">
+                                            <form class="layui-form" lay-filter=“form>
+                                                <select lay-filter="shuichang" id="shuichang" name="shuichang">
+
+                                                </select>
+                                            </form>
+                                            </div>
+                                    </div></span></div>
+                                    <div data-v-71b02e80="" class="el-row">
+                                        <!--水厂-->
+                                        <div class="layui-col-md6" style="width:100%">
+                                            <div class="layui-card">
+                                                <div class="layui-card-body">
+                                                    <div id="shuichangTu" style="height: 410px"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script src="../js/echarts.js" charset="utf-8"></script>
+<script src="../home/js/home.js?v=20161020" charset="utf-8"></script>
+
+</body>
+</html>

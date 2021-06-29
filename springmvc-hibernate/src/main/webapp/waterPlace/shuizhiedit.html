@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form ">
+    <input type="hidden" id="id" name="id">
+    <input type="hidden" id="yuanshuidiname" name="yuanshuidiname">
+    <input type="hidden" id="sid" name="sid">
+    <input type="hidden" id="oper" name="oper" value="">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">源水地名称</label>
+        <div class="layui-inline">
+            <select name="sid" lay-filter="yuanshuidi" id="yuanshuidi">
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">检测时间</label>
+        <div class="layui-input-inline">
+            <input type="text" id="date" name="date" lay-verify="required" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">浑浊度</label>
+        <div class="layui-input-inline">
+            <input type="text" id="hunzhuo" name="hunzhuo" lay-verify="required" value="" class="layui-input">
+        </div>
+        <label class="layui-form-label required">色度</label>
+        <div class="layui-input-inline">
+            <input type="text" id="sedu" name="sedu" lay-verify="required" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">臭和度</label>
+        <div class="layui-input-inline">
+            <input type="text" id="chou" name="chou" lay-verify="required" value="" class="layui-input">
+        </div>
+        <label class="layui-form-label required">肉眼可见物</label>
+        <div class="layui-input-inline">
+            <input type="text" id="rouyan" name="rouyan" lay-verify="required" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">游离氯(mg/L)</label>
+        <div class="layui-input-inline">
+            <input type="text" id="youli" name="youli" lay-verify="required" value="" class="layui-input">
+        </div>
+        <label class="layui-form-label required">菌落总数(CFU/100mL)</label>
+        <div class="layui-input-inline">
+            <input type="text" id="junluo" name="junluo" lay-verify="required" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">总大肠菌群(CFU/100mL)</label>
+        <div class="layui-input-inline">
+            <input type="text" id="zongjunqun" name="phone" lay-verify="required" value="" class="layui-input">
+        </div>
+        <label class="layui-form-label required">耐热大肠菌群(CFU/100mL)</label>
+        <div class="layui-input-inline">
+            <input type="text" id="nairejunqun" name="nairejunqun" lay-verify="required" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">耗氧量(mg/L)</label>
+        <div class="layui-input-inline">
+            <input type="text" id="haoyang" haoyang="haoyang" lay-verify="required" value="" class="layui-input">
+        </div>
+        <label class="layui-form-label required">PH值</label>
+        <div class="layui-input-inline">
+            <input type="text" id="ph" haoyang="ph" lay-verify="required" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注信息</label>
+        <div class="layui-input-inline">
+            <textarea name="remark" id="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button id="save" class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn" style="margin-left:128px">确认保存
+            </button>
+        </div>
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+        //加载下拉框
+        $.ajax({
+            url: '/waterPlace/getSomeWaterPlace',
+            type: 'post',
+            data: {},
+            success: function (data) {
+                for (var i = 0; i < data.data.length; i++) {
+                    if (data.data[i].id == $("#sid").val()) {
+                        $("#yuanshuidi").append(
+                            "<option value=\"" + data.data[i].id + "\" selected=\"\">" + data.data[i].name + "</option>");
+                    } else {
+                        $("#yuanshuidi").append(
+                            "<option value=\"" + data.data[i].id + "\">" + data.data[i].name + "</option>");
+                    }
+                }
+                form.render();
+            },
+            error: function (e) {
+                layer.alert("获取水厂失败！")
+            },
+        });
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            data.field.yuanshuidiname = $('#yuanshuidi option:selected').text();
+            $.ajax({
+                url: '/shuizhi/updateShuiZhi',
+                type: 'post',
+                data: data.field,
+                success: function (data) {
+                    if (data != "0") {
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(iframeIndex);
+                        parent.layui.table.reload('currentTableId', {page: {curr: 1}});
+                        parent.layer.alert("保存成功！", {icon: 1, time: 1000});
+                    } else {
+                        layer.alert("提交失败！")
+                    }
+                },
+                error: function (e) {
+                    layer.alert("提交失败！")
+                },
+            });
+
+            return false;
+        });
+        form.on('select(yuanshuidi)', function (data) {
+            $("#sid").val(data);
+            $("#yuanshuidiname").val($('#yuanshuidi option:selected').text());
+        });
+        if($("#oper").val() == "readonly"){
+            $("input,textarea").prop("readonly",true);
+            $("select").prop("disabled",true);
+            $("#save").hide();
+        }
+    });
+</script>
+</body>
+</html>

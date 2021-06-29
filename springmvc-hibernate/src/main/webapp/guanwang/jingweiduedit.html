@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <input id="id" name="id" type="hidden">
+    <input id="names" name="names" type="hidden">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">管网名称</label>
+        <div class="layui-input-block">
+            <select id="guanwangname" name="guanwangname">
+
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">经度</label>
+        <div class="layui-input-block">
+            <input type="number" id="jingdu" name="jingdu" lay-verify="required" lay-reqtext="经度不能为空" placeholder="请输入经度" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">维度</label>
+        <div class="layui-input-block">
+            <input type="number" id="weidu" name="weidu" lay-verify="required" lay-reqtext="维度不能为空" placeholder="请输入维度" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注信息</label>
+        <div class="layui-input-block">
+            <textarea id="remark" name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            console.log(data.field);
+            $.ajax({
+                url:'/guanwang/updateWaterPlace',
+                type:'post',
+                data:data.field,
+                success:function(data){
+                    if(data!="0"){
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(iframeIndex);
+                        parent.layui.table.reload('currentTableId',{page:{curr:1}});
+                        parent.layer.alert("保存成功！",{icon: 1,time: 1000});
+                    }
+                    else{
+                        layer.alert("提交失败！")
+                    }
+                },
+                error:function(e){
+                    layer.alert("提交失败！")
+                },
+            });
+
+            return false;
+        });
+
+        //加载下拉框
+        $.ajax({
+            url: '/guanwang/getSomeWaterPlace',
+            type: 'post',
+            success: function (data) {
+                var on = false;
+                var count = 0;
+                for (var i = 0; i < data.data.length; i++) {
+                    if($("#names").val() == data.data[i].guanwangname && count == 0){
+                       on = true;
+                    }
+                    if (on) {
+                        $("#guanwangname").append(
+                            "<option value=\"" + data.data[i].guanwangname + "\" selected=\"\">" + data.data[i].guanwangname + "</option>");
+                        on = false;
+                        count = 1;
+                    } else {
+                        $("#guanwangname").append(
+                            "<option value=\"" + data.data[i].guanwangname + "\">" + data.data[i].guanwangname + "</option>");
+                    }
+                }
+                form.render();
+            },
+            error: function (e) {
+                layer.alert("获取管网失败！")
+            },
+        });
+
+
+    });
+</script>
+</body>
+</html>

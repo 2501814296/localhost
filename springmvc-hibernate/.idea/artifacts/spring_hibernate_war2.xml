@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="spring-hibernate:war2">
+    <output-path>$PROJECT_DIR$/../war</output-path>
+    <root id="archive" name="spring-hibernate_war.war">
+      <element id="artifact" artifact-name="spring-hibernate:war exploded" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/webapp" />
+    </root>
+  </artifact>
+</component>

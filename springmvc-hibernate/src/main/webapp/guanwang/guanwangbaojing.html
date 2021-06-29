@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+<!--        <script type="text/html" id="toolbarDemo">-->
+<!--            <div class="layui-btn-container">-->
+<!--                <b>列表</b>-->
+<!--            </div>-->
+<!--        </script>-->
+        <div>
+            <span><b>管网报警列表</b>
+                <label style="color: red">(报警信息为最大压力、流量，其中>=1000的数据)</label>
+            </span>
+        </div>
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter">
+
+        </table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">查看</a>
+        </script>
+
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        table.render({
+            elem: '#currentTableId',
+            url: '/guanwang/getSomeWaterPlace',
+            // toolbar: '#toolbarDemo',
+            // defaultToolbar: ['filter','exports','print'],
+            cols: [[
+                {type: "numbers", width:'10%',align:'center', title: '序号'},
+                {field: 'guanwangname', width: '10%', title: '管网名称',align:'center'},
+                {field: 'bianhao', width: '10%', title: '编号',align:'center'},
+                {field: 'changdu', width: '10%', title: '长度',align:'center'},
+                {field: 'chicun', title: '尺寸', Width: '10%',align:'center'},
+                {field: 'maxyali', width: '10%', title: '最大压力',align:'center'},
+                {field: 'liuliang', width: '10%', title: '流量',align:'center'},
+                {field: 'shuiwei', width: '10%', title: '水位',align:'center'},
+                {field: 'remark', width: '10%', title: '备注',align:'center'},
+                {title: '操作', Width: '10%', toolbar: '#currentTableBar',align:'center'}
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true,
+            skin: 'line',
+            page: {
+                curr: 1
+            }
+            , where: {
+                maxyali:1000,
+                liuliang:1000
+            }
+        });
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                var index = layer.open({
+                    title: '查看',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin:false,
+                    shadeClose: true,
+                    scrollbar: false,
+                    area: ['100%', '100%'],
+                    content: 'guanwangedit.html?id='+data.id,
+                    success :function (layero,index){
+                        var body = layer.getChildFrame('body', index);
+                        body.find("#oper").val("readonly");
+                        body.find("#id").val(data.id);
+                        body.find("#names").val(data.name);
+                        body.find("#dizhi").val(data.dizhi);
+                        body.find("#dianhua").val(data.dianhua);
+                        body.find("#faren").val(data.faren);
+                        body.find("#remark").val(data.remark);
+                        body.find("#jingdu").val(data.jingdu);
+                        body.find("#weidu").val(data.weidu);
+                        body.find("#lianxiren").val(data.lianxiren);
+                        body.find("#guanwangname").val(data.guanwangname);
+                        body.find("#shuiwei").val(data.shuiwei);
+                        body.find("#liuliang").val(data.liuliang);
+                        body.find("#maxyali").val(data.maxyali);
+                        body.find("#chicun").val(data.chicun);
+                        body.find("#changdu").val(data.changdu);
+                        body.find("#bianhao").val(data.bianhao);
+                    }
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>

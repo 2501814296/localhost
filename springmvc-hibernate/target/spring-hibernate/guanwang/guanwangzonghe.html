@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+  <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+  <link rel="stylesheet" href="../css/public.css" media="all">
+  <style>
+    .layui-card {
+      border: 1px solid #F2F2F2;
+      border-radius: 5px;
+    }
+
+    .icon {
+      margin-right: 10px;
+      color: #1AA094;
+    }
+
+    .icon-cray {
+      color: #FFB800 !important;
+    }
+
+    .icon-blue {
+      color: #1E9FFF !important;
+    }
+
+    .icon-tip {
+      color: #FF5722 !important;
+    }
+
+    .layuimini-qiuck-module {
+      text-align: center;
+      margin-top: 10px
+    }
+
+    .layuimini-qiuck-module a i {
+      display: inline-block;
+      width: 100%;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      border-radius: 2px;
+      font-size: 30px;
+      background-color: #F8F8F8;
+      color: #333;
+      transition: all .3s;
+      -webkit-transition: all .3s;
+    }
+
+    .layuimini-qiuck-module a cite {
+      position: relative;
+      top: 2px;
+      display: block;
+      color: #666;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .welcome-module {
+      width: 100%;
+      height: 210px;
+    }
+
+    .panel {
+      background-color: #FFF;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, .05)
+    }
+
+    .panel-body {
+      padding: 10px
+    }
+
+    .panel-title {
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: 12px;
+      color: inherit
+    }
+
+    .label {
+      display: inline;
+      padding: .2em .6em .3em;
+      font-size: 75%;
+      font-weight: 700;
+      line-height: 1;
+      color: #FFF;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: .25em;
+      margin-top: .3em;
+    }
+
+    .layui-red {
+      color: red
+    }
+
+    .main_btn > p {
+      height: 40px;
+    }
+
+    .layui-bg-number {
+      background-color: #F8F8F8;
+    }
+
+    .layuimini-notice:hover {
+      background: #F6F6F6;
+    }
+
+    .layuimini-notice {
+      padding: 7px 16px;
+      clear: both;
+      font-size: 12px !important;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s ease-in-out;
+    }
+
+    .layuimini-notice-title, .layuimini-notice-label {
+      padding-right: 70px !important;
+      text-overflow: ellipsis !important;
+      overflow: hidden !important;
+      white-space: nowrap !important;
+    }
+
+    .layuimini-notice-title {
+      line-height: 28px;
+      font-size: 14px;
+    }
+
+    .layuimini-notice-extra {
+      position: absolute;
+      top: 50%;
+      margin-top: -8px;
+      right: 16px;
+      display: inline-block;
+      height: 16px;
+      color: #999;
+    }
+
+    .layui-form-label {
+      float: left;
+      display: block;
+      width: 60px;
+      font-weight: 400;
+      line-height: 20px;
+      text-align: right;
+      padding: 9px 15px;
+    }
+
+    .layui-form-item {
+      clear: both;
+    }
+  </style>
+</head>
+<body>
+<div class="layuimini-container">
+  <div class="layuimini-main">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-row layui-col-space15">
+          <!--基本信息-->
+          <div class="layui-col-md6">
+            <div class="layui-card">
+              <div class="layui-card-header">基本信息</div>
+              <div class="layui-card-body">
+                <form class="layui-form" lay-filter=“form>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">管网名称</label>
+                    <div class="layui-inline">
+                      <select lay-filter="guanwangnames" id="guanwangnames">
+                      </select>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">管网名称</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="guanwangname" name="guanwangname" value="" class="layui-input" readonly>
+                    </div>
+                    <label class="layui-form-label">地址</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="dizhi" name="dizhi" value="" class="layui-input" readonly>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">经度</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="jingdu" name="jingdu" value="" class="layui-input" readonly>
+                    </div>
+                    <label class="layui-form-label">纬度</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="weidu" name="weidu" value="" class="layui-input" readonly>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">法人</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="faren" name="faren" value="" class="layui-input" readonly>
+                    </div>
+                    <label class="layui-form-label">联系人</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="lianxiren" name="lianxiren" value="" class="layui-input" readonly>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">水厂</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="name" name="name" value="" class="layui-input" readonly>
+                    </div>
+                    <label class="layui-form-label">编号</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="bianhao" name="bianhao" value="" class="layui-input" readonly>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">长度</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="changdu" name="changdu" value="" class="layui-input" readonly>
+                    </div>
+                    <label class="layui-form-label">尺寸</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="chicun" name="chicun" value="" class="layui-input" readonly>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">压力</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="maxyali" name="maxyali" value="" class="layui-input" readonly>
+                    </div>
+                    <label class="layui-form-label">流量</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="liuliang" name="liuliang" value="" class="layui-input" readonly>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">水位</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="shuiwei" name="shuiwei" value="" class="layui-input" readonly>
+                    </div>
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="dianhua" name="dianhua" value="" class="layui-input" readonly>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-inline">
+                      <input type="text" id="remark" name="remark" value="" class="layui-input" readonly>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!--统计-->
+          <div class="layui-col-md6">
+            <div class="layui-card">
+              <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>管网统计</div>
+              <div class="layui-card-body">
+                <div id="guanwangtongji" style="width: 100%;min-height:500px"></div>
+              </div>
+            </div>
+          </div>
+          <!--水质指标-->
+          <div class="layui-col-md12">
+            <div class="layui-card">
+              <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>管网水质指标</div>
+              <div class="layui-card-body" style="">
+                <div id="shuizhi-hunzhuo" style="width: 30%;min-height:250px;display: inline-block"></div>
+                <div id="shuizhi-sedu" style="width: 30%;min-height:250px;display: inline-block"></div>
+                <div id="shuizhi-youli" style="width: 30%;min-height:250px;display: inline-block"></div>
+                <div id="shuizhi-junqun" style="width: 30%;min-height:250px;display: inline-block"></div>
+                <div id="shuizhi-zongjunqun" style="width: 30%;min-height:250px;display: inline-block"></div>
+                <div id="shuizhi-ph" style="width: 30%;min-height:250px;display: inline-block"></div>
+              </div>
+            </div>
+          </div>
+          <!--水质统计图-->
+<!--          <div class="layui-col-md6">-->
+<!--            <div class="layui-card">-->
+<!--              <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>水质统计</div>-->
+<!--              <div class="layui-card-body">-->
+<!--                <div id="shuizhitongji" style="width: 100%;min-height:500px"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script src="../js/echarts.js" charset="utf-8"></script>
+
+<script>
+  var optionRecords;
+  layui.use(['layer', 'miniTab', 'form'], function () {
+    var $ = layui.jquery,
+    form = layui.form
+    layer = layui.layer,
+    miniTab = layui.miniTab,
+    miniTab.listen();
+    //切换下拉框，切换统计图
+    var guanwangtongji = echarts.init(document.getElementById('guanwangtongji'), 'walden');
+    // var shuizhitongji = echarts.init(document.getElementById('shuizhitongji'), 'walden');
+    var shuizhihunzhuo = echarts.init(document.getElementById('shuizhi-hunzhuo'));
+    var shuizhisedu = echarts.init(document.getElementById('shuizhi-sedu'));
+    var shuizhiyouli = echarts.init(document.getElementById('shuizhi-youli'));
+    var shuizhijunqun = echarts.init(document.getElementById('shuizhi-junqun'));
+    var shuizhizongjunqun = echarts.init(document.getElementById('shuizhi-zongjunqun'));
+    var shuizhizongph = echarts.init(document.getElementById('shuizhi-ph'));
+
+    function hunzhuoTu() {
+      var option = {
+        series: [{
+          type: 'gauge',
+          startAngle: 180,
+          endAngle: 0,
+          min: 0,
+          max: 1,
+          splitNumber: 5,
+          itemStyle: {
+            color: '#58D9F9',
+            shadowColor: 'rgba(0,138,255,0.45)',
+            shadowBlur: 10,
+            shadowOffsetX: 2,
+            shadowOffsetY: 2
+          },
+          progress: {
+            show: true,
+            roundCap: true,
+            width: 10
+          },
+          pointer: {
+            icon: 'path://M2090.36389,615.30999 L2090.36389,615.30999 C2091.48372,615.30999 2092.40383,616.194028 2092.44859,617.312956 L2096.90698,728.755929 C2097.05155,732.369577 2094.2393,735.416212 2090.62566,735.56078 C2090.53845,735.564269 2090.45117,735.566014 2090.36389,735.566014 L2090.36389,735.566014 C2086.74736,735.566014 2083.81557,732.63423 2083.81557,729.017692 C2083.81557,728.930412 2083.81732,728.84314 2083.82081,728.755929 L2088.2792,617.312956 C2088.32396,616.194028 2089.24407,615.30999 2090.36389,615.30999 Z',
+            length: '75%',
+            width: 10,
+            offsetCenter: [0, '5%']
+          },
+          axisLine: {
+            roundCap: true,
+            lineStyle: {
+              width: 10
+            }
+          },
+          axisTick: {
+            splitNumber: 2,
+            lineStyle: {
+              width: 2,
+              color: '#999'
+            }
+          },
+          splitLine: {
+            length: 2,
+            lineStyle: {
+              width: 2,
+              color: '#999'
+            }
+          },
+          axisLabel: {
+            distance: 30,
+            color: '#999',
+            fontSize: 10
+          },
+          title: {
+            show: true,
+            fontSize:10
+          },
+          detail: {
+            backgroundColor: '#fff',
+            width: '60%',
+            height: 10,
+            offsetCenter: [0, '35%'],
+            valueAnimation: true,
+            fontSize:10,
+            formatter: function (value) {
+              return value;
+            },
+            rich: {
+              value: {
+                fontWeight: 'bolder',
+                color: '#777'
+              },
+            }
+          },
+          data: [{
+            value: 0.07,
+            name:"浑浊度"
+          }]
+        }]
+      };
+      shuizhihunzhuo.setOption(option);
+      option.series[0].data[0].value=0.6;
+      option.series[0].data[0].name="游离氯";
+      shuizhiyouli.setOption(option);
+      option.series[0].data[0].value=0;
+      option.series[0].data[0].name="菌落总数";
+      shuizhijunqun.setOption(option);
+      option.series[0].data[0].value=0;
+      option.series[0].data[0].name="总大肠菌群";
+      shuizhizongjunqun.setOption(option);
+      option.series[0].data[0].value=1;
+      option.series[0].max=14;
+      option.series[0].splitNumber=7;
+      option.series[0].data[0].name="PH";
+      shuizhizongph.setOption(option);
+      option.series[0].data[0].value=1;
+      option.series[0].data[0].name="色度";
+      shuizhisedu.setOption(option);
+    }
+
+    // function changeTu2() {
+    //   $.ajax({
+    //     url: '/shuizhi/getShuiZhiList',
+    //     type: 'post',
+    //     data: {
+    //       "sid": $('#yuanshuidi option:selected').val(), "type": "day"
+    //     },
+    //     success: function (data) {
+    //       var sedu = [];
+    //       var ph = [];
+    //       var haoyang = [];
+    //       var hunzhuo = [];
+    //       var youli = [];
+    //       var time = [];
+    //       for (var i = 0; i < data.length; i++) {
+    //         sedu.push(data[i].sedu);
+    //         ph.push(data[i].ph);
+    //         haoyang.push(data[i].haoyang);
+    //         hunzhuo.push(data[i].hunzhuo);
+    //         youli.push(data[i].youli);
+    //         time.push(data[i].date);
+    //       }
+    //       optionRecords = {
+    //         tooltip: {
+    //           trigger: 'axis'
+    //         },
+    //         legend: {
+    //           data: ['色度', 'PH值', '耗氧量', '浑浊度', '游离氯']
+    //         },
+    //         grid: {
+    //           left: '3%',
+    //           right: '4%',
+    //           bottom: '3%',
+    //           containLabel: true
+    //         },
+    //         toolbox: {
+    //           feature: {
+    //             saveAsImage: {}
+    //           }
+    //         },
+    //         xAxis: {
+    //           type: 'category',
+    //           boundaryGap: false,
+    //           data: time
+    //         },
+    //         yAxis: {
+    //           type: 'value'
+    //         },
+    //         series: [
+    //           {
+    //             name: '色度',
+    //             type: 'line',
+    //             data: sedu
+    //           },
+    //           {
+    //             name: 'PH值',
+    //             type: 'line',
+    //             data: ph
+    //           },
+    //           {
+    //             name: '耗氧量',
+    //             type: 'line',
+    //             data: haoyang
+    //           }
+    //           ,
+    //           {
+    //             name: '浑浊度',
+    //             type: 'line',
+    //             data: hunzhuo
+    //           }
+    //           ,
+    //           {
+    //             name: '耗氧量',
+    //             type: 'line',
+    //             data: youli
+    //           }
+    //         ]
+    //       };
+    //       //重新渲染统计图
+    //       shuizhitongji.setOption(optionRecords);
+    //     },
+    //     error: function (e) {
+    //       layer.alert("获取源水地统计图失败！")
+    //     },
+    //   });
+    // }
+
+    function changeJBXX() {
+      $.ajax({
+        url: '/guanwang/getWaterPlaceById',
+        type: 'post',
+        data: {
+          "id": $('#guanwangnames option:selected').val()
+        },
+        success: function (data) {
+          $("#guanwangname").val(data.guanwangname);
+          $("#dizhi").val(data.dizhi);
+          $("#jingdu").val(data.jingdu);
+          $("#weidu").val(data.weidu);
+          $("#faren").val(data.faren);
+          $("#lianxiren").val(data.lianxiren);
+          $("#name").val(data.name);
+          $("#bianhao").val(data.bianhao);
+          $("#changdu").val(data.changdu);
+          $("#chicun").val(data.chicun);
+          $("#maxyali").val(data.maxyali);
+          $("#liuliang").val(data.liuliang);
+          $("#shuiwei").val(data.shuiwei);
+          $("#dianhua").val(data.dianhua);
+          $("#remark").val(data.remark);
+        }
+      });
+    }
+
+    function changeTu() {
+      $.ajax({
+        url: '/guanwang/getListBySid',
+        type: 'post',
+        data: {
+          "sid": $('#guanwangnames option:selected').val(),
+          "type": "day"
+        },
+        success: function (data) {
+          var chanshuilv = [];
+          var haodianliang = [];
+          var gongshuilaing = [];
+          var time = [];
+          for (var i = 0; i < data.length; i++) {
+            chanshuilv.push(data[i].chanshui);
+            haodianliang.push(data[i].haodian);
+            gongshuilaing.push(data[i].gongshui);
+            time.push(data[i].date);
+          }
+          optionRecords = {
+            tooltip: {
+              trigger: 'axis'
+            },
+            legend: {
+              data: ['产水率', '耗电量', '供水量']
+            },
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+            },
+            toolbox: {
+              feature: {
+                saveAsImage: {}
+              }
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: time
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                name: '产水率',
+                type: 'line',
+                data: chanshuilv
+              },
+              {
+                name: '耗电量',
+                type: 'line',
+                data: haodianliang
+              },
+              {
+                name: '供水量',
+                type: 'line',
+                data: gongshuilaing
+              }
+            ]
+          };
+          //重新渲染统计图
+          guanwangtongji.setOption(optionRecords);
+        },
+        error: function (e) {
+          layer.alert("获取源水地统计图失败！")
+        },
+      });
+    }
+
+    //加载下拉框
+    $.ajax({
+      url: '/guanwang/getSomeWaterPlace',
+      type: 'post',
+      data: {},
+      success: function (data) {
+        for (var i = 0; i < data.data.length; i++) {
+          if (i == 0) {
+            $("#guanwangnames").append(
+              "<option value=\"" + data.data[i].id + "\" selected=\"\">" + data.data[i].guanwangname + "</option>");
+          } else {
+            $("#guanwangnames").append(
+              "<option value=\"" + data.data[i].id + "\">" + data.data[i].guanwangname + "</option>");
+          }
+        }
+        form.render();
+        changeTu();
+        // changeTu2();
+        changeJBXX();
+        hunzhuoTu();
+      },
+      error: function (e) {
+        layer.alert("获取源水地失败！")
+      },
+    });
+
+    //监听下拉框的选择
+    form.on('select(guanwangnames)', function (data) {
+      //选择了之后切换统计图
+      changeTu();
+      // changeTu2();
+      changeJBXX();
+      hunzhuoTu();
+    });
+    // echarts 窗口缩放自适应
+    window.onresize = function () {
+      guanwangtongji.resize();
+    }
+
+  });
+</script>
+</body>
+</html>

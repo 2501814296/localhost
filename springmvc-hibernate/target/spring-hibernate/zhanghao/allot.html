@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <input type="hidden" id="id" name="id">
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" id="username" name="username" lay-verify="required" lay-reqtext="角色名称不能为空" placeholder="请输入角色名称" value="" class="layui-input" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">昵称</label>
+            <div class="layui-input-block">
+                <input type="text" id="nicheng" name="nicheng" lay-verify="required" lay-reqtext="创建时间不能为空" placeholder="请输入创建时间" value="" class="layui-input" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">角色</label>
+            <div class="layui-input-block">
+                <select id="jueseList">
+                    <option value="0">--请选择--</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button id="save" class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">绑定角色</button>
+        </div>
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        var jid = "";
+        $.ajax({
+            url: '/juse/getJueseByid',
+            type: 'post',
+            data: {
+                uid : $("#id").val()
+            },
+            async:false,
+            success: function (success) {
+                if(success.jid != 0){
+                    jid =  success.jid;
+                }
+            }
+        })
+        $.ajax({
+            url: '/juse/getAllList',
+            type: 'post',
+            async:false,
+            success: function (data) {
+                debugger;
+                for (var i = 0; i < data.data.length; i++) {
+                    if (jid != 0 && jid == data.data[i].id) {
+                        $("#jueseList").append(
+                            "<option value=\"" + data.data[i].id + "\" selected=\"\">" + data.data[i].name + "</option>");
+                    } else {
+                        $("#jueseList").append(
+                            "<option value=\"" + data.data[i].id + "\">" + data.data[i].name + "</option>");
+                    }
+                }
+                form.render();
+            }
+        })
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            if($("#jueseList").val() == 0){
+                layer.alert("请选择角色！")
+                return false;
+            }
+            data.field.uid = $("#id").val();
+            data.field.jid = $("#jueseList").val();
+            $.ajax({
+                url:'/user/allot',
+                type:'post',
+                data:data.field,
+                success:function(data){
+                    var iframeIndex = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(iframeIndex);
+                    parent.layui.table.reload('currentTableId',{page:{curr:1}});
+                    parent.layer.alert("绑定成功！",{icon: 1,time: 1000});
+                },
+                error:function(e){
+                    layer.alert("提交失败！")
+                },
+            });
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

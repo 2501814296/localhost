@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form " >
+    <input id="sid" name="sid" type="hidden">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">水厂名称</label>
+        <div class="layui-inline">
+            <select name="sname" lay-filter="shuichang" id="shuichang">
+            </select>
+        </div>
+    </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">检测时间</label>
+            <div class="layui-input-inline">
+                <input type="text" id="date" name="date" lay-verify="required"  value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">浑浊度</label>
+            <div class="layui-input-inline">
+                <input type="text" id="hunzhuo" name="hunzhuo" lay-verify="required"  value="" class="layui-input">
+            </div>
+            <label class="layui-form-label required">色度</label>
+            <div class="layui-input-inline">
+                <input type="text" id="sedu" name="sedu" lay-verify="required" value="" class="layui-input">
+            </div>
+        </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">臭和度</label>
+        <div class="layui-input-inline">
+            <input type="text" id="chou" name="chou" lay-verify="required"  value="" class="layui-input">
+        </div>
+        <label class="layui-form-label required">肉眼可见物</label>
+        <div class="layui-input-inline">
+            <input type="text" id="rouyan" name="rouyan" lay-verify="required"  value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">游离氯(mg/L)</label>
+        <div class="layui-input-inline">
+            <input type="text" id="youli" name="youli" lay-verify="required" value="" class="layui-input">
+        </div>
+        <label class="layui-form-label required">菌落总数(CFU/100mL)</label>
+        <div class="layui-input-inline">
+            <input type="text" id="junluo" name="junluo" lay-verify="required" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">总大肠菌群(CFU/100mL)</label>
+        <div class="layui-input-inline">
+            <input type="text" id="zongjunqun" name="zongjunqun" lay-verify="required" value="" class="layui-input">
+        </div>
+        <label class="layui-form-label required">耐热大肠菌群(CFU/100mL)</label>
+        <div class="layui-input-inline">
+            <input type="text" id="nairejunqun" name="nairejunqun" lay-verify="required"  value="" class="layui-input">
+        </div>
+    </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">耗氧量(mg/L)</label>
+            <div class="layui-input-inline">
+                <input type="text" id="haoyang" name="haoyang" lay-verify="required"  value="" class="layui-input">
+            </div>
+            <label class="layui-form-label required">PH值</label>
+            <div class="layui-input-inline">
+                <input type="text" id="ph" name="ph"  lay-verify="required" value="" class="layui-input">
+            </div>
+        </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注信息</label>
+        <div class="layui-input-inline">
+            <textarea name="remark" id="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item" >
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn" style="margin-left:128px">确认保存</button>
+        </div>
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form','laydate'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+          laydate=layui.laydate,
+            $ = layui.$;
+        laydate.render({
+            elem: '#date'
+            ,type: 'date'
+        });
+        //加载下拉框
+        $.ajax({
+            url: '/water/getSomeWater',
+            type: 'post',
+            data: {},
+            success: function (data) {
+                for (var i = 0; i < data.data.length; i++) {
+                    if (i == 0) {
+                        $("#shuichang").append(
+                          "<option value=\"" + data.data[i].id + "\" selected=\"\">" + data.data[i].name + "</option>");
+                    } else {
+                        $("#shuichang").append(
+                          "<option value=\"" + data.data[i].id + "\">" + data.data[i].name + "</option>");
+                    }
+                }
+                form.render();
+            },
+            error: function (e) {
+                layer.alert("获取水厂失败！")
+            },
+        });
+        form.on('submit(saveBtn)', function (data) {
+            data.field.sid=parseInt($("#shuichang option:selected").val());
+            data.field.sname=$("#shuichang option:selected").text();
+            $.ajax({
+                url:'/shuizhi/saveShuiZhi',
+                type:'post',
+                data:data.field,
+                success:function(data){
+                    if(data!=0){
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(iframeIndex);
+                        parent.layui.table.reload('currentTableId',{page:{curr:1}});
+                        layer.alert("保存成功！")
+                    }
+                    else{
+                        layer.alert("提交失败！")
+                    }
+                },
+                error:function(e){
+                    layer.alert("提交失败！")
+                },
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

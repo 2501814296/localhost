@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+			 xmlns:context="http://www.springframework.org/schema/context"
+			 xmlns:mvc="http://www.springframework.org/schema/mvc"
+			 xmlns:aop="http://www.springframework.org/schema/aop"
+			 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- 启动AOP AspectJ注解自动代理 -->
+
+    <!-- 注解探测器 -->
+	<context:annotation-config />
+    <!-- 开启自动扫描包，实现bean创建和自动依赖注入 ，-->
+    <context:component-scan base-package="com.ssh" annotation-config="true">
+    	<!-- 只扫描controller -->
+    	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 拦截所有mvc控制器 -->
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/lib/**"/>
+			<mvc:exclude-mapping path="/images/**"/>
+			<mvc:exclude-mapping path="/css/**"/>
+			<mvc:exclude-mapping path="/api/**"/>
+			<mvc:exclude-mapping path="/js/**"/>
+			<mvc:exclude-mapping path="/home/login.html"/>
+			<!-- mvc:exclude-mapping是另外一种拦截，它可以在你后来的测试中对某个页面进行不拦截，这样就不用在
+               LoginInterceptor的preHandler方法里面获取不拦截的请求uri地址了(优选) -->
+			<!-- <mvc:exclude-mapping path="login.do" /> -->
+			<bean class="com.ssh.controller.LoginInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+    <!-- 允许对静态资源文件的访问 -->   
+	<mvc:default-servlet-handler /> 
+    
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+    </bean>
+
+</beans>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="scxm" default="default">
+	<property name="export.dir.root" value="F:\w\部署包"></property>
+
+	<!--卢宇浩-->
+	<target name="lyh">
+		<mkdir dir="${export.dir.root}\scxm"/>
+		<copy todir="${export.dir.root}\scxm" overwrite="true">
+			<fileset refid="lyh"/>
+		</copy>
+	</target>
+	<fileset id="lyh" dir="../../../">
+
+<!--		<include name="src/main/webapp/index.html" />-->
+<!--		<include name="src/main/webapp/home/**" />-->
+		<include name="src/main/java/com/ssh/**" />
+
+	</fileset>
+
+
+	<target name="all">
+			<mkdir dir="${export.dir.root}/scxm"/>
+			<copy todir="${export.dir.root}/scxm" overwrite="true">
+				<fileset refid="lyh"/>
+
+			</copy>
+		</target>
+		<!--删除上次导出文件-->
+		<target name="deleteOldFile" >  
+		    <delete verbose="true" includeemptydirs="true" failonerror="false" >
+		       <fileset dir="${export.dir.root}">
+		           <include name="**/*"/>
+		       </fileset>
+		    </delete>
+		</target> 
+
+		<target name="default" depends="deleteOldFile,all">
+	        <exec executable="cmd" failonerror="false">  
+	            <arg line='/c explorer "${export.dir.root}\"' />  
+	        </exec>
+		</target>	
+	</project>

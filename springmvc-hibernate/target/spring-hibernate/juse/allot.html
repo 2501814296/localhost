@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <input type="hidden" id="id" name="id">
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">角色名</label>
+            <div class="layui-input-block">
+                <input type="text" id="name" name="name" lay-verify="required" lay-reqtext="角色名称不能为空" placeholder="请输入角色名称" value="" class="layui-input" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label required">创建时间</label>
+            <div class="layui-input-block">
+                <input type="text" id="time" name="time" lay-verify="required" lay-reqtext="创建时间不能为空" placeholder="请输入创建时间" value="" class="layui-input" readonly>
+            </div>
+        </div>
+    </div>
+<!--    <div class="layui-form-item">-->
+<!--        <div class="layui-col-md6">-->
+<!--            <label class="layui-form-label required">角色</label>-->
+<!--            <div class="layui-input-block">-->
+<!--                <select id="jueseList">-->
+<!--                    <option value="0">&#45;&#45;请选择&#45;&#45;</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label">操作模块：</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="like" title="首页" value="1">
+                <input type="checkbox" name="like" title="水厂管理" value="2">
+                <input type="checkbox" name="like" title="源水情管理" value="3">
+                <input type="checkbox" name="like" title="管网管理" value="4">
+                <input type="checkbox" name="like" title="系统管理" value="5">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button id="save" class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">绑定权限</button>
+        </div>
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+        $.ajax({
+            url: '/menu/selectJuseMenu',
+            type: 'post',
+            data: {
+                jueseId : $("#id").val()
+            },
+            async:false,
+            dataType:"json",
+            success: function (data) {
+                debugger;
+                if(data.flag == "1"){
+                    $.each(data.mids,function (key,value) {
+                        $(":checkbox[value='"+value+"']").prop("checked",true);
+                        $(":checkbox[value='"+value+"']").next().attr("class","layui-unselect layui-form-checkbox layui-form-checked");
+                    })
+                }
+            }
+        })
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var arr = [];
+            $("input[name='like']:checked").each(function () {
+                arr.push($(this).val());
+            });
+            console.log(arr);
+            if(arr.length == 0){
+                layer.alert("请为角色至少添加一个权限！")
+                return false;
+            }
+            $.ajax({
+                url:'/menu/insertJuseMenu',
+                type:'post',
+                data:{
+                    array : arr,
+                    jueseId : $("#id").val()
+                },
+                dataType:"json",
+                success:function(data){
+                    var iframeIndex = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(iframeIndex);
+                    parent.layui.table.reload('currentTableId',{page:{curr:1}});
+                    parent.layer.alert("权限绑定成功！",{icon: 1,time: 1000});
+                },
+                error:function(e){
+                    layer.alert("提交失败！")
+                },
+            });
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

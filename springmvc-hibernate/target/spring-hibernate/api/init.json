@@ -1,0 +1,167 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "home/home.html?x=1"
+  },
+  "logoInfo": {
+    "title": "水务平台",
+    "image": "images/logo.png",
+    "href": "home/login.html?x=1"
+  },
+  "menuInfo": [
+    {
+      "title": "首页",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "首页",
+          "href": "home/home.html?t=1",
+          "icon": "fa fa-home",
+          "target": "_self"
+        }
+      ]
+    },
+    {
+      "title": "水厂管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "水厂管理",
+          "href": "water/shuichangguanli.html",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "水厂统计",
+          "href": "water/shuichangtongji.html",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        },
+        {
+          "title": "水厂水质管理",
+          "href": "water/shuizhiguanli.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
+          "title": "水厂水质统计",
+          "href": "water/shuizhitongji.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
+          "title": "水厂综合",
+          "href": "water/shuichangzonghe.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        }
+      ]
+    },
+    {
+      "title": "源水情管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "源水地管理",
+          "href": "waterPlace/yuanshuidiguanli.html",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "源水地统计",
+          "href": "waterPlace/yuanshuiditongji.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
+          "title": "源水地报告管理",
+          "href": "waterPlace/shuizhiguanli.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
+          "title": "源水地综合",
+          "href": "waterPlace/yuanshuidizonghe.html",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        },
+        {
+          "title": "源水地报警",
+          "href": "waterPlace/yuanshuidibaojing.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        }
+      ]
+    },
+    {
+      "title": "管网管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "管网管理",
+          "href": "guanwang/guanwangguanli.html",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "官网综合",
+          "href": "guanwang/guanwangzonghe.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
+          "title": "官网经纬度管理",
+          "href": "guanwang/jingweiduguanli.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
+          "title": "官网报警",
+          "href": "guanwang/guanwangbaojing.html",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        }
+      ]
+    },
+    {
+      "title": "系统管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "日志管理",
+          "href": "log/loglist.html",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "账号管理",
+          "href": "/guanwangzonghe.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
+          "title": "权限管理",
+          "href": "guanwang/jingweiduguanli.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
+          "title": "角色管理",
+          "href": "guanwang/guanwangbaojing.html",
+          "icon": "fa fa-gears",
+          "target": "_self"
+        }
+      ]
+    }
+  ]
+}

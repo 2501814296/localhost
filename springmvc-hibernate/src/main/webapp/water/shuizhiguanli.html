@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <input id="wid" type="hidden" value="0">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">水厂名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sname" id="sname" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn" id="sousuo"><i class="layui-icon"></i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter">
+
+        </table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        table.render({
+            elem: '#currentTableId',
+            url: '/shuizhi/getSomeList',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter','exports','print'],
+            cols: [[
+                {type: "checkbox", width:'5%',align:'center'},
+                {type: "numbers", width:'5%',align:'center', title: '序号'},
+                {field: 'sname', width: '9%', title: '水厂名称',align:'center'},
+                {field: 'date', width: '9%', title: '检测时间',align:'center'},
+                {field: 'hunzhuo', width: '9%', title: '浑浊度',align:'center'},
+                {field: 'sedu', title: '色度', Width: '9%',align:'center'},
+                {field: 'chou', width: '9%', title: '臭和味',align:'center'},
+                {field: 'rouyan', width: '9%', title: '肉眼可见物',align:'center'},
+                {field: 'youli', width: '9%', title: '游离氯',align:'center'},
+                {field: 'junluo', width: '9%', title: '总菌落数',align:'center'},
+                {field: 'remark', width: '9%', title: '备注',align:'center'},
+                {title: '操作', Width: '9%', toolbar: '#currentTableBar',align:'center'}
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true,
+            skin: 'line',
+            where: {
+                id : 2
+            }
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            var result = JSON.stringify(data.field);
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    id:$("#wid").val(),
+                    sname:$("#sname").val(),
+                }
+            });
+            return false;
+        });
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '添加水厂水质信息',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: 'shuizhiadd.html',
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            } else if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                var ids="";
+                for(var i=0;i<data.length;i++){
+                 ids+=data[i].id+",";
+                }
+                ids=ids.substring(0,ids.length-1);
+                $.ajax({
+                    url:'/shuizhi/deleteShuiZhi',
+                    type:'post',
+                    data:{
+                        "ids":ids,
+                    },
+                    dataType:"html",
+                    success:function(data){
+                        if(data!=0){
+                            table.reload('currentTableId',{page:{curr:1}});
+                            layer.alert("删除成功！")
+                        }
+                        else{
+                            layer.alert("删除失败！")
+                        }
+                    },
+                    error:function(e){
+                        layer.alert("删除失败！")
+                    },
+                });
+            }
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+        });
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                var index = layer.open({
+                    title: '编辑',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin:false,
+                    shadeClose: true,
+                    scrollbar: false,
+                    area: ['100%', '100%'],
+                    content: 'shuizhiedit.html?id='+data.id,
+                    success :function (layero,index){
+                        var body = layer.getChildFrame('body', index);
+                        body.find("#id").val(data.id);
+                        body.find("#sid").val(data.sid);
+                        body.find("#sname").val(data.sname);
+                        body.find("#date").val(data.date);
+                        body.find("#hunzhuo").val(data.hunzhuo);
+                        body.find("#sedu").val(data.sedu);
+                        body.find("#chou").val(data.chou);
+                        body.find("#rouyan").val(data.rouyan);
+                        body.find("#youli").val(data.youli);
+                        body.find("#junluo").val(data.junluo);
+                        body.find("#zongjunqun").val(data.zongjunqun);
+                        body.find("#nairejunqun").val(data.nairejunqun);
+                        body.find("#haoyang").val(data.haoyang);
+                        body.find("#ph").val(data.ph);
+                        body.find("#remark").val(data.remark);
+                    }
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+                return false;
+            } else if (obj.event === 'delete') {
+                layer.confirm('确认删除？', function (index) {
+                    $.ajax({
+                        url:'/shuizhi/deleteShuiZhi',
+                        type:'post',
+                        data:{
+                            "ids":obj.data.id,
+                        },
+                        dataType:"html",
+                        success:function(data){
+                            if(data!=0){
+                                table.reload('currentTableId',{page:{curr:1}});
+                                layer.alert("删除成功！")
+                            }
+                            else{
+                                layer.alert("删除失败！")
+                            }
+                        },
+                        error:function(e){
+                            layer.alert("删除失败！")
+                        },
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>
